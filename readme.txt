@@ -40,7 +40,7 @@ That's it!
 
 Subversion (SVN) users can check out the plugin directly from the WordPress.org repository:
 
-[http://svn.wp-plugins.org/what-would-seth-godin-do/](http://svn.wp-plugins.org/what-would-seth-godin-do/)
+[http://plugins.svn.wordpress.org/what-would-seth-godin-do/](http://plugins.svn.wordpress.org/what-would-seth-godin-do/)
 
 
 == Frequently Asked Questions ==

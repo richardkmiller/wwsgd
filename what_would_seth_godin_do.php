@@ -82,7 +82,7 @@ function wwsgd_options_subpanel()
 			<input type="radio" name="wwsgd_message_location" value="after_post" <?php if ($wwsgd_settings['message_location'] == 'after_post') echo 'checked="checked"'; ?> /> After Post</p>
 			<p><input type="radio" name="wwsgd_message_include_pages" value="yes" <?php if ($wwsgd_settings['include_pages'] == 'yes') echo 'checked="checked"'; ?> /> On Posts and Pages
 			<input type="radio" name="wwsgd_message_include_pages" value="no" <?php if ($wwsgd_settings['include_pages'] == 'no') echo 'checked="checked"'; ?> /> On Posts Only</p>
-			<p><input type="submit" name="submit" value="Save Settings" /></p><a href="../../../Desktop/what_would_seth_godin_do.php" id="" title="what_would_seth_godin_do">what_would_seth_godin_do</a>
+			<p><input type="submit" name="submit" value="Save Settings" /></p>
 			<?php
 			if (function_exists('wp_nonce_field'))
 				wp_nonce_field('wwsgd_update_options');
