@@ -3,7 +3,7 @@ Contributors: richardkmiller
 Donate link: http://richardkmiller.com/
 Tags: marketing, segmentation, cookies, Seth Godin, GPL
 Requires at least: 2.0
-Tested up to: 2.6.3
+Tested up to: 2.7
 Stable tag: 1.6
 
 Displays a custom welcome message to new visitors and another to return visitors.
