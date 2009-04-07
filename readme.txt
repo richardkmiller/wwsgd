@@ -47,7 +47,7 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 == Frequently Asked Questions ==
 
 = Can I position the welcome message before the title or elsewhere on the page? =
->You can position the welcome message in a specific location by using the template tag `<?php wwsgd_get_the_message(); ?>` in your theme.
+>You can position the welcome message in a specific location by using the template tag `<?php wwsgd_the_message(); ?>` in your theme.
 
 == Screenshots ==
 
