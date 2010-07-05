@@ -3,6 +3,9 @@ CHANGELOG
 "What Would Seth Godin Do" WordPress Plugin by Richard K Miller
 http://richardkmiller.com/wordpress-plugin-what-would-seth-godin-do
 
+=== Version 1.7.1 (2010-07-05) ===
+- Tested with WordPress 3.0
+
 === Version 1.7 (2009-04-06) ===
 - Added template tag <?php wwsgd_the_message(); ?> which can be used in themes for positioning the message in any location.
 
