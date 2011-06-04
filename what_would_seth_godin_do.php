@@ -19,9 +19,10 @@ $wwsgd_settings['new_visitor_message'] = stripslashes($wwsgd_settings['new_visit
 $wwsgd_settings['return_visitor_message'] = stripslashes($wwsgd_settings['return_visitor_message']); // and here?
 
 add_action('admin_menu', 'wwsgd_options_page');
-add_action('send_headers', 'wwsgd_set_cookie');
+add_action('wp_head', 'wwsgd_js');
 add_filter('the_content', 'wwsgd_filter_content');
 add_filter('get_the_excerpt', 'wwsgd_filter_excerpt', 1);
+wp_enqueue_script('jquery');
 
 function wwsgd_initialize_and_get_settings() {
     $defaults = array(
@@ -101,23 +102,8 @@ function wwsgd_options_subpanel() {
     <?php
 }
 
-function wwsgd_set_cookie() {
-    global $wwsgd_visits;
-
-    if (!is_admin()) {
-        if (isset($_COOKIE['wwsgd_visits'])) {
-            $wwsgd_visits = $_COOKIE['wwsgd_visits'] + 1;
-        }
-        else {
-            $wwsgd_visits = 1;
-        }
-        $url = parse_url(get_option('home'));
-        setcookie('wwsgd_visits', $wwsgd_visits, time()+60*60*24*365, $url['path'] . '/');
-    }
-}
-
 function wwsgd_filter_content($content = '') {
-    global $wwsgd_visits, $wwsgd_settings, $wwsgd_messagedisplayed;
+    global $wwsgd_settings, $wwsgd_messagedisplayed;
 
     $using_template_tag_only = $wwsgd_settings['message_location'] == 'template_tag_only';
     $excluding_pages = (is_page() && $wwsgd_settings['include_pages'] == 'no');
@@ -143,10 +129,10 @@ function wwsgd_filter_excerpt($content = '') {
 }
 
 function wwsgd_get_the_message() {
-    global $wwsgd_visits, $wwsgd_settings;
+    global $wwsgd_settings;
 
-    if ($wwsgd_visits <= $wwsgd_settings['repetition'] || 0 == $wwsgd_settings['repetition']) {
-        return $wwsgd_settings['new_visitor_message'];
+    if ($_COOKIE['wwsgd_visits'] < $wwsgd_settings['repetition'] || 0 == $wwsgd_settings['repetition']) {
+        return '<div class="wwsgd" style="display:none;">'. $wwsgd_settings['new_visitor_message'] . '</div>';
     }
     else {
         return $wwsgd_settings['return_visitor_message'];
@@ -155,4 +141,25 @@ function wwsgd_get_the_message() {
 
 function wwsgd_the_message() {
     echo wwsgd_get_the_message();
+}
+
+function wwsgd_js() {
+    global $wwsgd_settings;
+?>
+<script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/what-would-seth-godin-do/jquery.cookie.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        if (!jQuery.cookie('wwsgd_visits')) {
+            jQuery.cookie('wwsgd_visits', 1);
+        }
+        else {
+            jQuery.cookie('wwsgd_visits', parseInt(jQuery.cookie('wwsgd_visits'), 10) + 1);
+        }
+
+        if (parseInt(jQuery.cookie('wwsgd_visits'), 10) <= <?php echo $wwsgd_settings['repetition'] ?>) {
+            jQuery(".wwsgd").show();
+        }
+    });
+</script>
+<?php
 }
