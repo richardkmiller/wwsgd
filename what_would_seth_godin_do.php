@@ -4,7 +4,7 @@
 Plugin Name: What Would Seth Godin Do
 Plugin URI: http://richardkmiller.com/wordpress-plugin-what-would-seth-godin-do
 Description: Displays a custom welcome message to new visitors and another to return visitors.
-Version: 1.7.2
+Version: 1.7.3
 Author: Richard K Miller
 Author URI: http://richardkmiller.com/
 
@@ -20,7 +20,8 @@ $wwsgd_settings['return_visitor_message'] = stripslashes($wwsgd_settings['return
 
 add_action('admin_menu', 'wwsgd_options_page');
 add_action('send_headers', 'wwsgd_set_cookie');
-add_filter('the_content', 'wwsgd_message_filter');
+add_filter('the_content', 'wwsgd_filter_content');
+add_filter('get_the_excerpt', 'wwsgd_filter_excerpt', 1);
 
 function wwsgd_initialize_and_get_settings()
 {
@@ -125,11 +126,11 @@ function wwsgd_set_cookie()
 	}
 }
 
-function wwsgd_message_filter($content = '')
+function wwsgd_filter_content($content = '')
 {
 	global $wwsgd_visits, $wwsgd_settings, $wwsgd_messagedisplayed;
 	
-	if ($wwsgd_messagedisplayed || is_feed() || $wwsgd_settings['message_location'] == 'template_tag_only' || ($wwsgd_settings['include_pages'] == 'no' && is_page()))
+	if ($wwsgd_messagedisplayed || is_feed() || $GLOBALS['wwsgd_displaying_excerpt'] || $wwsgd_settings['message_location'] == 'template_tag_only' || ($wwsgd_settings['include_pages'] == 'no' && is_page()))
 	{
 		return $content;
 	}
@@ -146,6 +147,11 @@ function wwsgd_message_filter($content = '')
 			return $content . wwsgd_get_the_message();
 		}
 	}
+}
+
+function wwsgd_filter_excerpt($content = '') {
+    $GLOBALS['wwsgd_displaying_excerpt'] = true;
+    return $content;
 }
 
 function wwsgd_get_the_message()
