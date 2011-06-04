@@ -15,9 +15,6 @@ http://www.gnu.org/licenses/gpl.txt
 
 $wwsgd_settings = wwsgd_initialize_and_get_settings();
 
-$wwsgd_settings['new_visitor_message'] = stripslashes($wwsgd_settings['new_visitor_message']); // TODO: Is stripslashes() the best thing here?
-$wwsgd_settings['return_visitor_message'] = stripslashes($wwsgd_settings['return_visitor_message']); // and here?
-
 add_action('admin_menu', 'wwsgd_options_page');
 add_action('wp_head', 'wwsgd_js');
 add_filter('the_content', 'wwsgd_filter_content');
@@ -53,7 +50,6 @@ function wwsgd_options_subpanel() {
         $wwsgd_settings['message_location'] = stripslashes($_POST['wwsgd_message_location']);
         $wwsgd_settings['include_pages'] = stripslashes($_POST['wwsgd_message_include_pages']);
         $wwsgd_settings['repetition'] = stripslashes($_POST['wwsgd_repetition']);
-
         update_option('wwsgd_settings', $wwsgd_settings);
     }
     if (isset($_POST['wwsgd_reset_settings']) ) {
@@ -80,7 +76,7 @@ function wwsgd_options_subpanel() {
                         <label for="wwsgd_new_visitor_message">Message to New Visitors:</label>
                     </th>
                     <td>
-                        <textarea rows="3" cols="80" name="wwsgd_new_visitor_message"><?php echo attribute_escape($wwsgd_settings['new_visitor_message']); ?></textarea>
+                        <textarea rows="3" cols="80" name="wwsgd_new_visitor_message"><?php echo esc_textarea($wwsgd_settings['new_visitor_message']); ?></textarea>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -88,7 +84,7 @@ function wwsgd_options_subpanel() {
                         <label for="wwsgd_repetition">Repetition</label>
                     </th>
                     <td>
-                        <p>Show the above message the first <input type="text" name="wwsgd_repetition" value="<?php echo attribute_escape($wwsgd_settings['repetition']); ?>" size="3" /> times the user visits your blog. Then display the message below.</p>
+                        <p>Show the above message the first <input type="text" name="wwsgd_repetition" value="<?php echo esc_attr($wwsgd_settings['repetition']); ?>" size="3" /> times the user visits your blog. Then display the message below.</p>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -96,7 +92,7 @@ function wwsgd_options_subpanel() {
                         <label for="wwsgd_return_visitor_message">Message to Return Visitors</label>
                     </th>
                     <td>
-                        <textarea rows="3" cols="80" name="wwsgd_return_visitor_message"><?php echo attribute_escape($wwsgd_settings['return_visitor_message']); ?></textarea>
+                        <textarea rows="3" cols="80" name="wwsgd_return_visitor_message"><?php echo esc_textarea($wwsgd_settings['return_visitor_message']); ?></textarea>
                     </td>
                 </tr>
                 <tr valign="top">
