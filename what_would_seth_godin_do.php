@@ -38,7 +38,7 @@ function wwsgd_initialize_and_get_settings() {
 }
 
 function wwsgd_options_page() {
-    if (function_exists('add_options_page')) {
+    if ( function_exists('add_options_page') ) {
         add_options_page('What Would Seth Godin Do', 'WWSGD', 8, basename(__FILE__), 'wwsgd_options_subpanel');
     }
 }
@@ -46,7 +46,7 @@ function wwsgd_options_page() {
 function wwsgd_options_subpanel() {
     global $wwsgd_settings;
 
-    if (isset($_POST['wwsgd_save_settings'])) {
+    if ( isset($_POST['wwsgd_save_settings']) ) {
         check_admin_referer('wwsgd_update_options');
         $wwsgd_settings['new_visitor_message'] = stripslashes($_POST['wwsgd_new_visitor_message']);
         $wwsgd_settings['return_visitor_message'] = stripslashes($_POST['wwsgd_return_visitor_message']);
@@ -56,48 +56,87 @@ function wwsgd_options_subpanel() {
 
         update_option('wwsgd_settings', $wwsgd_settings);
     }
-    if (isset($_POST['wwsgd_reset_settings'])) {
+    if (isset($_POST['wwsgd_reset_settings']) ) {
         check_admin_referer('wwsgd_reset_options');
         delete_option('wwsgd_settings');
         $wwsgd_settings = wwsgd_initialize_and_get_settings();
     }
     ?>
     <div class="wrap">
+        <div id="icon-options-general" class="icon32"><br /></div>
         <h2>What Would Seth Godin Do</h2>
         <p>"One opportunity that's underused is the idea of using cookies to treat returning visitors differently than newbies...." - <a href="http://sethgodin.typepad.com/seths_blog/2006/08/in_the_middle_s.html" target="_blank">Seth Godin, August 17, 2006</a></p>
-        <form action="" method="post">
+
+        <form method="post">
             <input type="hidden" name="wwsgd_save_settings" value="true" />
-            <h3>Message to New Visitors:</h3>
-            <textarea rows="3" cols="80" name="wwsgd_new_visitor_message"><?php echo attribute_escape($wwsgd_settings['new_visitor_message']); ?></textarea>
-            <h3>Repetition</h3>
-            <p>Show the above message the first <input type="text" name="wwsgd_repetition" value="<?php echo attribute_escape($wwsgd_settings['repetition']); ?>" size="3" /> times the user visits your blog. Then display the message below.</p>
-            <h3>Message to Return Visitors:</h3>
-            <textarea rows="3" cols="80" name="wwsgd_return_visitor_message"><?php echo attribute_escape($wwsgd_settings['return_visitor_message']); ?></textarea>
-            <h3>Location of Message</h3>
-            <p><input type="radio" name="wwsgd_message_location" value="before_post" <?php if ($wwsgd_settings['message_location'] == 'before_post') echo 'checked="checked"'; ?> /> Before Post
-            <input type="radio" name="wwsgd_message_location" value="after_post" <?php if ($wwsgd_settings['message_location'] == 'after_post') echo 'checked="checked"'; ?> /> After Post
-            <input type="radio" name="wwsgd_message_location" value="template_tag_only" <?php if ($wwsgd_settings['message_location'] == 'template_tag_only') echo 'checked="checked"'; ?> /> Only where I use the <code>&lt;?php wwsgd_the_message(); ?&gt;</code>template tag</p>
-            <p><input type="radio" name="wwsgd_message_include_pages" value="yes" <?php if ($wwsgd_settings['include_pages'] == 'yes') echo 'checked="checked"'; ?> /> On Posts and Pages
-            <input type="radio" name="wwsgd_message_include_pages" value="no" <?php if ($wwsgd_settings['include_pages'] == 'no') echo 'checked="checked"'; ?> /> On Posts Only</p>
-            <p><input type="submit" name="submit" value="Save Settings" /></p>
             <?php
-            if (function_exists('wp_nonce_field'))
-                wp_nonce_field('wwsgd_update_options');
+                if ( function_exists('wp_nonce_field') ) {
+                    wp_nonce_field('wwsgd_update_options');
+                }
             ?>
+            <table class="form-table">
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wwsgd_new_visitor_message">Message to New Visitors:</label>
+                    </th>
+                    <td>
+                        <textarea rows="3" cols="80" name="wwsgd_new_visitor_message"><?php echo attribute_escape($wwsgd_settings['new_visitor_message']); ?></textarea>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wwsgd_repetition">Repetition</label>
+                    </th>
+                    <td>
+                        <p>Show the above message the first <input type="text" name="wwsgd_repetition" value="<?php echo attribute_escape($wwsgd_settings['repetition']); ?>" size="3" /> times the user visits your blog. Then display the message below.</p>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wwsgd_return_visitor_message">Message to Return Visitors</label>
+                    </th>
+                    <td>
+                        <textarea rows="3" cols="80" name="wwsgd_return_visitor_message"><?php echo attribute_escape($wwsgd_settings['return_visitor_message']); ?></textarea>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wwsgd_message_location">Location of Message</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="wwsgd_message_location" value="before_post" <?php if ( $wwsgd_settings['message_location'] == 'before_post' ) echo 'checked="checked"'; ?> /> Before Post
+                        <input type="radio" name="wwsgd_message_location" value="after_post" <?php if ($wwsgd_settings['message_location'] == 'after_post' ) echo 'checked="checked"'; ?> /> After Post
+                        <input type="radio" name="wwsgd_message_location" value="template_tag_only" <?php if ( $wwsgd_settings['message_location'] == 'template_tag_only' ) echo 'checked="checked"'; ?> /> Only where I use the <code>&lt;?php wwsgd_the_message(); ?&gt;</code>template tag
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wwsgd_message_include_pages">Include Pages?</label>
+                    </th>
+                    <td>
+                        <input type="radio" name="wwsgd_message_include_pages" value="yes" <?php if ( $wwsgd_settings['include_pages'] == 'yes' ) echo 'checked="checked"'; ?> /> On Posts and Pages
+                        <input type="radio" name="wwsgd_message_include_pages" value="no" <?php if ( $wwsgd_settings['include_pages'] == 'no' ) echo 'checked="checked"'; ?> /> On Posts Only
+                    </td>
+                </tr>
+            </table>
+            <p class="submit"><input type="submit" name="submit" value="Save Settings" class="button-primary" /></p>
         </form>
-        <form action="" method="post">
-            <h3>Reset plugin</h3>
-            <p>This may clear up some issues.</p>
+
+        <h3>Reset Settings</h3>
+        <form method="post">
             <input type="hidden" name="wwsgd_reset_settings" value="true" />
-            <p><input type="submit" name="submit" value="Reset Settings" /></p>
             <?php
-            if (function_exists('wp_nonce_field'))
+            if ( function_exists('wp_nonce_field') )
                 wp_nonce_field('wwsgd_reset_options');
             ?>
-            </form>
+            <input type="submit" name="submit" value="Reset Settings" class="button-primary" />
+            This may clear up some issues.
+        </form>
+
         <h3>Additional Reading</h3>
         <p><a href="http://sethgodin.typepad.com/seths_blog/2008/03/where-do-we-beg.html" target="_blank">Where do we begin?</a> by Seth Godin</p>
         <p><a href="http://fortuito.us/2007/05/how_ads_really_work_superfans_1" target="_blank">How Ads Really Work: Superfans and Noobs</a> by Matthew Haughey</p>
+
     </div>
     <?php
 }
@@ -108,15 +147,15 @@ function wwsgd_filter_content($content = '') {
     $using_template_tag_only = $wwsgd_settings['message_location'] == 'template_tag_only';
     $excluding_pages = (is_page() && $wwsgd_settings['include_pages'] == 'no');
 
-    if ($wwsgd_messagedisplayed || is_feed() || $GLOBALS['wwsgd_displaying_excerpt'] || $using_template_tag_only || $excluding_pages) {
+    if ( $wwsgd_messagedisplayed || is_feed() || $GLOBALS['wwsgd_displaying_excerpt'] || $using_template_tag_only || $excluding_pages ) {
         return $content;
     }
     else {
-        if ($wwsgd_settings['message_location'] == 'before_post') {
+        if ( $wwsgd_settings['message_location'] == 'before_post' ) {
             $wwsgd_messagedisplayed = true;
             return wwsgd_get_the_message() . $content;
         }
-        elseif ($wwsgd_settings['message_location'] == 'after_post') {
+        elseif ( $wwsgd_settings['message_location'] == 'after_post' ) {
             $wwsgd_messagedisplayed = true;
             return $content . wwsgd_get_the_message();
         }
@@ -131,7 +170,7 @@ function wwsgd_filter_excerpt($content = '') {
 function wwsgd_get_the_message() {
     global $wwsgd_settings;
 
-    if ($_COOKIE['wwsgd_visits'] < $wwsgd_settings['repetition'] || 0 == $wwsgd_settings['repetition']) {
+    if ( $_COOKIE['wwsgd_visits'] < $wwsgd_settings['repetition'] || 0 == $wwsgd_settings['repetition'] ) {
         return '<div class="wwsgd" style="display:none;">'. $wwsgd_settings['new_visitor_message'] . '</div>';
     }
     else {
@@ -149,14 +188,14 @@ function wwsgd_js() {
 <script type="text/javascript" src="<?php echo bloginfo("url"); ?>/wp-content/plugins/what-would-seth-godin-do/jquery.cookie.js"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
-        if (!jQuery.cookie('wwsgd_visits')) {
+        if ( !jQuery.cookie('wwsgd_visits') ) {
             jQuery.cookie('wwsgd_visits', 1);
         }
         else {
             jQuery.cookie('wwsgd_visits', parseInt(jQuery.cookie('wwsgd_visits'), 10) + 1);
         }
 
-        if (parseInt(jQuery.cookie('wwsgd_visits'), 10) <= <?php echo $wwsgd_settings['repetition'] ?>) {
+        if ( parseInt(jQuery.cookie('wwsgd_visits'), 10) <= <?php echo $wwsgd_settings['repetition'] ?> ) {
             jQuery(".wwsgd").show();
         }
     });
