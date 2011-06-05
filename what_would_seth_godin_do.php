@@ -27,7 +27,8 @@ function wwsgd_initialize_and_get_settings() {
         'return_visitor_message' => '',
         'message_location' => 'before_post',
         'include_pages' => 'yes',
-        'repetition' => '5'
+        'repetition' => '5',
+        'wwsgd_exclude_ids' => '',
         );
 
     add_option('wwsgd_settings', $defaults, 'Options for What Would Seth Godin Do');
@@ -50,6 +51,7 @@ function wwsgd_options_subpanel() {
         $wwsgd_settings['message_location'] = stripslashes($_POST['wwsgd_message_location']);
         $wwsgd_settings['include_pages'] = stripslashes($_POST['wwsgd_message_include_pages']);
         $wwsgd_settings['repetition'] = stripslashes($_POST['wwsgd_repetition']);
+        $wwsgd_settings['wwsgd_exclude_ids'] = stripslashes($_POST['wwsgd_exclude_ids']);
         update_option('wwsgd_settings', $wwsgd_settings);
     }
     if (isset($_POST['wwsgd_reset_settings']) ) {
@@ -73,7 +75,7 @@ function wwsgd_options_subpanel() {
             <table class="form-table">
                 <tr valign="top">
                     <th scope="row">
-                        <label for="wwsgd_new_visitor_message">Message to New Visitors:</label>
+                        <label for="wwsgd_new_visitor_message">Message to New Visitors</label>
                     </th>
                     <td>
                         <textarea rows="3" cols="80" name="wwsgd_new_visitor_message"><?php echo esc_textarea($wwsgd_settings['new_visitor_message']); ?></textarea>
@@ -81,7 +83,7 @@ function wwsgd_options_subpanel() {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="wwsgd_repetition">Repetition</label>
+                        <label for="wwsgd_repetition"># of Repetitions</label>
                     </th>
                     <td>
                         <p>Show the above message the first <input type="text" name="wwsgd_repetition" value="<?php echo esc_attr($wwsgd_settings['repetition']); ?>" size="3" /> times the user visits your blog. Then display the message below.</p>
@@ -92,7 +94,7 @@ function wwsgd_options_subpanel() {
                         <label for="wwsgd_return_visitor_message">Message to Return Visitors</label>
                     </th>
                     <td>
-                        <textarea rows="3" cols="80" name="wwsgd_return_visitor_message"><?php echo esc_textarea($wwsgd_settings['return_visitor_message']); ?></textarea>
+                        <textarea rows="3" cols="80" name="wwsgd_return_visitor_message" placeholder="Welcome back!"><?php echo esc_textarea($wwsgd_settings['return_visitor_message']); ?></textarea>
                     </td>
                 </tr>
                 <tr valign="top">
@@ -107,11 +109,19 @@ function wwsgd_options_subpanel() {
                 </tr>
                 <tr valign="top">
                     <th scope="row">
-                        <label for="wwsgd_message_include_pages">Include Pages?</label>
+                        <label for="wwsgd_message_include_pages">Show Message on Pages?</label>
                     </th>
                     <td>
                         <input type="radio" name="wwsgd_message_include_pages" value="yes" <?php if ( $wwsgd_settings['include_pages'] == 'yes' ) echo 'checked="checked"'; ?> /> On Posts and Pages
                         <input type="radio" name="wwsgd_message_include_pages" value="no" <?php if ( $wwsgd_settings['include_pages'] == 'no' ) echo 'checked="checked"'; ?> /> On Posts Only
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <th scope="row">
+                        <label for="wwsgd_exclude_ids">Posts/Pages to Exclude</label>
+                    </th>
+                    <td>
+                        <input type="text" name="wwsgd_exclude_ids" value="<?php echo esc_attr($wwsgd_settings['wwsgd_exclude_ids']); ?>" size="60" placeholder="Post and page IDs separated by commas" />
                     </td>
                 </tr>
             </table>
@@ -142,8 +152,10 @@ function wwsgd_filter_content($content = '') {
 
     $using_template_tag_only = $wwsgd_settings['message_location'] == 'template_tag_only';
     $excluding_pages = (is_page() && $wwsgd_settings['include_pages'] == 'no');
+    $excluded_ids = explode(',', str_replace(' ', '', $wwsgd_settings['wwsgd_exclude_ids']));
+    $this_page_is_excluded = in_array($GLOBALS['post']->ID, $excluded_ids);
 
-    if ( $wwsgd_messagedisplayed || is_feed() || $GLOBALS['wwsgd_displaying_excerpt'] || $using_template_tag_only || $excluding_pages ) {
+    if ( $wwsgd_messagedisplayed || $this_page_is_excluded || $excluding_pages || $using_template_tag_only || $GLOBALS['wwsgd_displaying_excerpt'] || is_feed() ) {
         return $content;
     }
     else {
