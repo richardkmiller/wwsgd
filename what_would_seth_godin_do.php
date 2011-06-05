@@ -143,6 +143,7 @@ function wwsgd_options_subpanel() {
         <h3>I &hearts; WWSGD</h3>
         <p>If you love this plugin, please make a small donation to the <a href="https://secure3.convio.net/acumen/site/Donation2?1400.donation=form1&amp;df_id=1400">Acumen Fund</a>, a charity with which Seth Godin works. In the "Referred by" field, enter "Seth Godin".</p>
         <p>For questions, bug reports, or other feedback about this plugin, please contact <a href="http://richardkmiller.com/contact">Richard K. Miller</a>.</p>
+        <p>Please <a href="http://wordpress.org/extend/plugins/what-would-seth-godin-do/">rate this plugin</a> on WordPress.org.</p>
 
         <br/>
         <h3>Additional Reading</h3>
