@@ -63,7 +63,7 @@ function wwsgd_options_subpanel() {
     <div class="wrap">
         <div id="icon-options-general" class="icon32"><br /></div>
         <h2>What Would Seth Godin Do</h2>
-        <p>"One opportunity that's underused is the idea of using cookies to treat returning visitors differently than newbies...." - <a href="http://sethgodin.typepad.com/seths_blog/2006/08/in_the_middle_s.html" target="_blank">Seth Godin, August 17, 2006</a></p>
+        <p>"One opportunity that's underused is the idea of using cookies to treat returning visitors differently than newbies…." - <a href="http://sethgodin.typepad.com/seths_blog/2006/08/in_the_middle_s.html">Seth Godin, August 17, 2006</a></p>
 
         <form method="post">
             <input type="hidden" name="wwsgd_save_settings" value="true" />
@@ -139,9 +139,15 @@ function wwsgd_options_subpanel() {
             This may clear up some issues.
         </form>
 
+        <br/>
+        <h3>I &hearts; WWSGD</h3>
+        <p>If you love this plugin, please make a small donation to the <a href="https://secure3.convio.net/acumen/site/Donation2?1400.donation=form1&amp;df_id=1400">Acumen Fund</a>, a charity with which Seth Godin works. In the "Referred by" field, enter "Seth Godin".</p>
+        <p>For questions, bug reports, or other feedback about this plugin, please contact <a href="http://richardkmiller.com/contact">Richard K. Miller</a>.</p>
+
+        <br/>
         <h3>Additional Reading</h3>
-        <p><a href="http://sethgodin.typepad.com/seths_blog/2008/03/where-do-we-beg.html" target="_blank">Where do we begin?</a> by Seth Godin</p>
-        <p><a href="http://fortuito.us/2007/05/how_ads_really_work_superfans_1" target="_blank">How Ads Really Work: Superfans and Noobs</a> by Matthew Haughey</p>
+        <p><a href="http://sethgodin.typepad.com/seths_blog/2008/03/where-do-we-beg.html">Where do we begin?</a> by Seth Godin</p>
+        <p><a href="http://fortuito.us/2007/05/how_ads_really_work_superfans_1">How Ads Really Work: Superfans and Noobs</a> by Matthew Haughey</p>
 
     </div>
     <?php
