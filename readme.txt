@@ -3,8 +3,8 @@ Contributors: richardkmiller
 Donate link: http://richardkmiller.com/
 Tags: marketing, segmentation, cookies, Seth Godin, GPL
 Requires at least: 3.1
-Tested up to: 3.2.1
-Stable tag: 2.0.3
+Tested up to: 3.4
+Stable tag: 2.0.4
 
 Displays a custom welcome message to new visitors and another to return visitors.
 
@@ -59,6 +59,9 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 
 
 == CHANGELOG ==
+= 2.0.4 =
+* Fixed problem with jQuery not being loaded
+
 = 2.0.3 =
 * WWSGD only sets one cookie now, not a separate cookie for each post or page. (Fixed regression.)
 
@@ -103,6 +106,9 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 
 
 == Upgrade Notice ==
+= 2.0.4 =
+WWSGD now working with the latest version of WordPress, fixing a problem loading jQuery.
+
 = 2.0.3 =
 The WWSGD counter (and cookie) is now site-wide, not a separate counter for each page. (This is a return to the original v1 behavior.)
 

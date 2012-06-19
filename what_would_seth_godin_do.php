@@ -4,7 +4,7 @@
 Plugin Name: What Would Seth Godin Do
 Plugin URI: http://richardkmiller.com/wordpress-plugin-what-would-seth-godin-do
 Description: Displays a custom welcome message to new visitors and another to return visitors.
-Version: 2.0.3
+Version: 2.0.4
 Author: Richard K Miller
 Author URI: http://richardkmiller.com/
 
@@ -19,7 +19,7 @@ add_action('admin_menu', 'wwsgd_options_page');
 add_action('wp_footer', 'wwsgd_js');
 add_filter('the_content', 'wwsgd_filter_content');
 add_filter('get_the_excerpt', 'wwsgd_filter_excerpt', 1);
-wp_enqueue_script('jquery');
+add_action('wp_enqueue_scripts', 'wwsgd_enqueue_scripts');
 
 function wwsgd_initialize_and_get_settings() {
     $defaults = array(
@@ -219,3 +219,8 @@ function wwsgd_js() {
 </script>
 <?php
 }
+
+function wwsgd_enqueue_scripts() {
+    wp_enqueue_script('jquery');
+}
+
