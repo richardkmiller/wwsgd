@@ -3,8 +3,10 @@ Contributors: richardkmiller
 Donate link: http://richardkmiller.com/
 Tags: marketing, segmentation, cookies, Seth Godin, GPL
 Requires at least: 3.1
-Tested up to: 3.4
-Stable tag: 2.0.4
+Tested up to: 3.6
+Stable tag: 2.0.5
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Displays a custom welcome message to new visitors and another to return visitors.
 
@@ -59,6 +61,13 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 
 
 == CHANGELOG ==
+= 2.0.5 =
+* Bug fix: The welcome message was not being displayed on individual posts and page when certain plugins were installed (e.g. WordPress SEO by Yoast) that use `the_content` or `the_excerpt` internally. (Thanks to Rob Woodgate.)
+* Tested with WordPress 3.6
+* Updated informational links in Admin panel
+* Updated copyright year
+* Added License tag (GPLv2)
+
 = 2.0.4 =
 * Fixed problem with jQuery not being loaded
 
@@ -106,6 +115,9 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 
 
 == Upgrade Notice ==
+= 2.0.5 =
+Fixed a bug that prevented the welcome message from displaying on individual posts when certain plugins were installed.
+
 = 2.0.4 =
 WWSGD now working with the latest version of WordPress, fixing a problem loading jQuery.
 

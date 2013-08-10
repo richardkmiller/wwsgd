@@ -4,11 +4,11 @@
 Plugin Name: What Would Seth Godin Do
 Plugin URI: http://richardkmiller.com/wordpress-plugin-what-would-seth-godin-do
 Description: Displays a custom welcome message to new visitors and another to return visitors.
-Version: 2.0.4
+Version: 2.0.5
 Author: Richard K Miller
 Author URI: http://richardkmiller.com/
 
-Copyright (c) 2006-2011 Richard K Miller
+Copyright (c) 2006-2013 Richard K Miller
 Released under the GNU General Public License (GPL)
 http://www.gnu.org/licenses/gpl.txt
 */
@@ -18,7 +18,6 @@ $wwsgd_settings = wwsgd_initialize_and_get_settings();
 add_action('admin_menu', 'wwsgd_options_page');
 add_action('wp_footer', 'wwsgd_js');
 add_filter('the_content', 'wwsgd_filter_content');
-add_filter('get_the_excerpt', 'wwsgd_filter_excerpt', 1);
 add_action('wp_enqueue_scripts', 'wwsgd_enqueue_scripts');
 
 function wwsgd_initialize_and_get_settings() {
@@ -141,9 +140,9 @@ function wwsgd_options_subpanel() {
 
         <br/>
         <h3>I &hearts; WWSGD</h3>
-        <p>If you love this plugin, please make a small donation to the <a href="https://secure3.convio.net/acumen/site/Donation2?1400.donation=form1&amp;df_id=1400">Acumen Fund</a>, a charity with which Seth Godin works. In the "Referred by" field, enter "Seth Godin".</p>
+        <p>Please <a href="http://wordpress.org/plugins/what-would-seth-godin-do/">rate this plugin</a> on WordPress.org.</p>
+        <p>If you love this plugin, please make a small donation to the <a href="http://acumen.org/donate/">Acumen Fund</a>, a charity with which Seth Godin works. In the "Referred by" field, enter "Seth Godin".</p>
         <p>For questions, bug reports, or other feedback about this plugin, please contact <a href="http://richardkmiller.com/contact">Richard K. Miller</a>.</p>
-        <p>Please <a href="http://wordpress.org/extend/plugins/what-would-seth-godin-do/">rate this plugin</a> on WordPress.org.</p>
 
         <br/>
         <h3>Additional Reading</h3>
@@ -155,31 +154,35 @@ function wwsgd_options_subpanel() {
 }
 
 function wwsgd_filter_content($content = '') {
-    global $wwsgd_settings, $wwsgd_messagedisplayed;
+    global $wwsgd_settings;
 
-    $using_template_tag_only = $wwsgd_settings['message_location'] == 'template_tag_only';
-    $excluding_pages = (is_page() && $wwsgd_settings['include_pages'] == 'no');
-    $excluded_ids = explode(',', str_replace(' ', '', $wwsgd_settings['wwsgd_exclude_ids']));
-    $this_page_is_excluded = in_array($GLOBALS['post']->ID, $excluded_ids);
+    static $message_already_displayed = false;
 
-    if ( $wwsgd_messagedisplayed || $this_page_is_excluded || $excluding_pages || $using_template_tag_only || $GLOBALS['wwsgd_displaying_excerpt'] || is_feed() ) {
+    if ( ! in_the_loop() ) {
         return $content;
     }
-    else {
-        if ( $wwsgd_settings['message_location'] == 'before_post' ) {
-            $wwsgd_messagedisplayed = true;
-            return wwsgd_get_the_message() . $content;
-        }
-        elseif ( $wwsgd_settings['message_location'] == 'after_post' ) {
-            $wwsgd_messagedisplayed = true;
-            return $content . wwsgd_get_the_message();
-        }
-    }
-}
 
-function wwsgd_filter_excerpt($content = '') {
-    $GLOBALS['wwsgd_displaying_excerpt'] = true;
-    return $content;
+    if ( ! is_home() && ! is_front_page() && ! is_single() && ! is_page() ) {
+        return $content;
+    }
+
+    $excluded_ids = explode(',', str_replace(' ', '', $wwsgd_settings['wwsgd_exclude_ids']));
+
+    $template_tag_only  = ( $wwsgd_settings['message_location'] == 'template_tag_only' );
+    $all_pages_excluded = ( is_page() && $wwsgd_settings['include_pages'] == 'no' );
+    $this_post_excluded = in_array($GLOBALS['post']->ID, $excluded_ids);
+
+    if ( $template_tag_only || $all_pages_excluded || $this_post_excluded ) {
+        return $content;
+    }
+
+    if ( $message_already_displayed ) {
+        return $content;
+    }
+
+    $message_already_displayed = true;
+
+    return ( $wwsgd_settings['message_location'] == 'after_post' ) ? $content.wwsgd_get_the_message() : wwsgd_get_the_message().$content;
 }
 
 function wwsgd_get_the_message() {
