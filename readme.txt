@@ -3,7 +3,7 @@ Contributors: richardkmiller
 Donate link: http://richardkmiller.com/
 Tags: marketing, segmentation, cookies, Seth Godin, GPL
 Requires at least: 3.1
-Tested up to: 3.8.1
+Tested up to: 3.9.1
 Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,11 +14,11 @@ Displays a custom welcome message to new visitors and another to return visitors
 
 Seth Godin advocates using [cookies](http://en.wikipedia.org/wiki/HTTP_cookie) to distinguish between new and returning visitors to your site:
 
->"One opportunity that’s underused is the idea of using cookies to treat returning visitors differently than newbies. It’s more work at first, but it can offer two experiences to two different sorts of people." (Source: [In the Middle, Starting](http://sethgodin.typepad.com/seths_blog/2006/08/in_the_middle_s.html))
+>"One opportunity that's underused is the idea of using cookies to treat returning visitors differently than newbies. It's more work at first, but it can offer two experiences to two different sorts of people." (Source: [In the Middle, Starting](http://sethgodin.typepad.com/seths_blog/2006/08/in_the_middle_s.html))
 
-I built this WordPress plugin to implement Seth Godin’s idea. It reduces the "work at first" to almost nothing.
+I built this WordPress plugin to implement Seth Godin's idea. It reduces the "work at first" to almost nothing.
 
-By default, new visitors to your blog will see a small box above each post containing the words "If you’re new here, you may want to subscribe to my RSS feed. Thanks for visiting!" After 5 visits the message disappears. You can customize this message, its lifespan, and its location. The message can be excluded from certain pages if desired. 
+By default, new visitors to your blog will see a small box above each post containing the words "If you're new here, you may want to subscribe to my RSS feed. Thanks for visiting!" After 5 visits the message disappears. You can customize this message, its lifespan, and its location. The message can be excluded from certain pages if desired.
 
 New visitors will appreciate some context and background information about your site. This is your chance to offer them a special welcome and invite them to become permanent subscribers. You can also specify a message for return visitors.
 
