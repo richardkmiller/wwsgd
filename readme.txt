@@ -4,7 +4,7 @@ Donate link: http://richardkmiller.com/
 Tags: marketing, segmentation, cookies, Seth Godin, GPL
 Requires at least: 3.1
 Tested up to: 4.1
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 
 
 == CHANGELOG ==
+= 2.0.6 =
+* Bug fix: Make WWSGD compatible with SSL by using plugins_url() instead of WP_PLUGIN_URL
+
 = 2.0.5 =
 * Bug fix: The welcome message was not being displayed on individual posts and page when certain plugins were installed (e.g. WordPress SEO by Yoast) that use `the_content` or `the_excerpt` internally. (Thanks to Rob Woodgate.)
 * Tested with WordPress 3.6
@@ -115,6 +118,9 @@ Subversion (SVN) users can check out the plugin directly from the WordPress.org 
 
 
 == Upgrade Notice ==
+= 2.0.6 =
+Fixed a bug that caused errors on SSL pages
+
 = 2.0.5 =
 Fixed a bug that prevented the welcome message from displaying on individual posts when certain plugins were installed.
 
