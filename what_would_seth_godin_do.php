@@ -203,7 +203,7 @@ function wwsgd_the_message() {
 function wwsgd_js() {
     global $wwsgd_settings;
 ?>
-<script type="text/javascript" src="<?php echo WP_PLUGIN_URL; ?>/what-would-seth-godin-do/jquery.cookie.js"></script>
+<script type="text/javascript" src="<?php echo plugins_url("jquery.cookie.js", __FILE__); ?>"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
         var count;
