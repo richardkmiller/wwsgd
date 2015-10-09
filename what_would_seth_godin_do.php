@@ -7,6 +7,7 @@ Description: Displays a custom welcome message to new visitors and another to re
 Version: 2.0.6
 Author: Richard K Miller
 Author URI: http://richardkmiller.com/
+Text Domain: what-would-seth-godin-do
 
 Copyright (c) 2006-2013 Richard K Miller
 Released under the GNU General Public License (GPL)
